@@ -1,0 +1,13 @@
+﻿  main.cpp
+c:\users\laura\documents\school\artificialintelligence\progassignment3\progassignment3\main.cpp(44): warning C4244: '=': conversion from 'double' to 'std::size_t', possible loss of data
+c:\users\laura\documents\school\artificialintelligence\progassignment3\progassignment3\main.cpp(45): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\laura\documents\school\artificialintelligence\progassignment3\progassignment3\main.cpp(46): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\laura\documents\school\artificialintelligence\progassignment3\progassignment3\main.cpp(47): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\laura\documents\school\artificialintelligence\progassignment3\progassignment3\main.cpp(54): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\users\laura\documents\school\artificialintelligence\progassignment3\progassignment3\main.cpp(54): warning C4244: 'argument': conversion from 'double' to 'std::size_t', possible loss of data
+  DecisionTree.cpp
+  DecisionNode.cpp
+  ChanceNode.cpp
+  Generating Code...
+  ProgAssignment3.vcxproj -> C:\Users\laura\Documents\School\ArtificialIntelligence\ProgAssignment3\Debug\ProgAssignment3.exe
+  ProgAssignment3.vcxproj -> C:\Users\laura\Documents\School\ArtificialIntelligence\ProgAssignment3\Debug\ProgAssignment3.pdb (Partial PDB)
