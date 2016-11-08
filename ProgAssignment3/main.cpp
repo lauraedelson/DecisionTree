@@ -13,9 +13,6 @@ using namespace std;
 
 static string YES = "Yes";
 static string NO = "No";
-//static string LEAF = "leaf";
-//static string DECISION = "decision";
-//static string CHANCE = "chance";
 
 //given a space delimited string, return a vector of the parts
 vector<string> tokenize(string input) {
