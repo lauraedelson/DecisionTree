@@ -1,16 +1,13 @@
 #include "DecisionTree.h"
-#include "DecisionNode.h"
-#include "ChanceNode.h"
-#include "LeafNode.h"
 
 DecisionTree::DecisionTree(float sucessVal, float failureVal, float successProb, float failureProb, const vector<Reviewer>& reviewers)
 {
-	root = shared_ptr<Node>(new DecisionNode("root"));
+	root = boost::shared_ptr<Node>(new DecisionNode("root"));
 	
 	addReviewerChildren(root, sucessVal, failureVal, successProb, failureProb, 0, reviewers);
 }
 
-void DecisionTree::addReviewerChildren(shared_ptr<Node> root, float successVal, float failureVal, float successProb, float failureProb, float rejectValue, vector<Reviewer> reviewers)
+void DecisionTree::addReviewerChildren(boost::shared_ptr<Node> root, float successVal, float failureVal, float successProb, float failureProb, float rejectValue, vector<Reviewer> reviewers)
 {
 	while (!reviewers.empty()) {
 		Reviewer currReviewer = reviewers.back();
@@ -26,27 +23,27 @@ void DecisionTree::addReviewerChildren(shared_ptr<Node> root, float successVal, 
 		float currRejectValue = rejectValue - currReviewer.cost;
 
 		//add node representing this reviewer
-		shared_ptr<Node> reviewerNode = shared_ptr<Node>(new ChanceNode(currReviewer.name));
+		boost::shared_ptr<Node> reviewerNode = boost::shared_ptr<Node>(new ChanceNode(currReviewer.name));
 		root->addChild(reviewerNode);
 
 		//add accept child
-		shared_ptr<Node> acceptChild = shared_ptr<Node>(new DecisionNode("Accepted by " + currReviewer.name));
+		boost::shared_ptr<Node> acceptChild = boost::shared_ptr<Node>(new DecisionNode("Accepted by " + currReviewer.name));
 		reviewerNode->addChild(approveProbability, acceptChild);
 
 		//add children to accept child
 		addReviewerChildren(acceptChild, currSuccessVal, currFailureVal, currSuccessProbIfApproved, currFailureProbIfApproved, currRejectValue, reviewers);
 
 		//add reject child
-		shared_ptr<Node> rejectChild = shared_ptr<Node>(new DecisionNode("Rejected by " + currReviewer.name));
+		boost::shared_ptr<Node> rejectChild = boost::shared_ptr<Node>(new DecisionNode("Rejected by " + currReviewer.name));
 		reviewerNode->addChild(rejectProbability, rejectChild);
 
 		//add children to reject child
 		addReviewerChildren(rejectChild, currSuccessVal, currFailureVal, currSuccessProbIfRejected, currFailureProbIfRejected, currRejectValue, reviewers);
 	}
-	shared_ptr<Node> publish = shared_ptr<Node>(new ChanceNode("Publish"));
-	publish->addChild(successProb, shared_ptr<Node>(new LeafNode("Success", successVal)));
-	publish->addChild(failureProb, shared_ptr<Node>(new LeafNode("Failure", failureVal)));
+	boost::shared_ptr<Node> publish = boost::shared_ptr<Node>(new ChanceNode("Publish"));
+	publish->addChild(successProb, boost::shared_ptr<Node>(new LeafNode("Success", successVal)));
+	publish->addChild(failureProb, boost::shared_ptr<Node>(new LeafNode("Failure", failureVal)));
 	root->addChild(publish);
-	shared_ptr<Node> reject = shared_ptr<Node>(new LeafNode("Reject", rejectValue));
+	boost::shared_ptr<Node> reject = boost::shared_ptr<Node>(new LeafNode("Reject", rejectValue));
 	root->addChild(reject);
 }

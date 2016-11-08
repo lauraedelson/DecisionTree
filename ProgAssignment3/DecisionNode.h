@@ -1,24 +1,25 @@
-#pragma once
 #include <memory>
 #include <vector>
 #include <limits>
-
+#include <boost/shared_ptr.hpp>
 
 #include "Node.h"
+
+static string DECISION = "decision";
 
 class DecisionNode :
 	public Node
 {
 public:
-	DecisionNode(string inName) : Node(inName) { value = numeric_limits<float>::lowest(); }
+	DecisionNode(string inName) : Node(inName) { value = -1 * numeric_limits<float>::max(); }
 
-	node_t getType() {return decision;}
-	shared_ptr<Node> getChild(string childName);
-	shared_ptr<Node> getNextChild();
+	string getType() {return DECISION;}
+	boost::shared_ptr<Node> getChild(string childName);
+	boost::shared_ptr<Node> getNextChild();
 	float getValue();
-	void addChild(shared_ptr<Node> child) { children.push_back(child); }
-	void addChild(float prob, shared_ptr<Node> child) {}
+	void addChild(boost::shared_ptr<Node> child) { children.push_back(child); }
+	void addChild(float prob, boost::shared_ptr<Node> child) {}
 
 private:
-	vector<shared_ptr<Node>> children;
+	vector<boost::shared_ptr<Node> > children;
 };

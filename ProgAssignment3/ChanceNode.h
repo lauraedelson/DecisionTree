@@ -1,22 +1,24 @@
-#pragma once
-#include "Node.h"
+#include "DecisionNode.h"
+#include <limits>
 #include <map>
+#include <boost/shared_ptr.hpp>
 
+static string CHANCE = "chance";
 
 class ChanceNode :
 	public Node
 {
 public:
-	ChanceNode(string inName) : Node(inName) { value = numeric_limits<float>::lowest(); }
+	ChanceNode(string inName) : Node(inName) { value = -1 * numeric_limits<float>::max(); }
 
-	node_t getType() {return chance;}
-	shared_ptr<Node> getChild(string childName);
+	string getType() {return CHANCE;}
+	boost::shared_ptr<Node> getChild(string childName);
 	float getValue();
-	shared_ptr<Node> getNextChild();
-	void addChild(shared_ptr<Node> child) {}
-	void addChild(float prob, shared_ptr<Node> child) { children[prob] = child; }
+	boost::shared_ptr<Node> getNextChild();
+	void addChild(boost::shared_ptr<Node> child) {}
+	void addChild(float prob, boost::shared_ptr<Node> child) { children[prob] = child; }
 
 private:
-	map<float, shared_ptr<Node>> children;
+	map<float, boost::shared_ptr<Node> > children;
 };
 

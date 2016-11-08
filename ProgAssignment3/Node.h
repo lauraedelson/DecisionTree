@@ -1,13 +1,10 @@
-#pragma once
-
 #include <memory>
 #include <string>
+#include <boost/shared_ptr.hpp>
 
 
 using namespace std;
 
-
-enum node_t{decision, chance, leaf};
 
 class Node
 {
@@ -16,12 +13,12 @@ public:
 
 	string getName() { return name; };
 
-	virtual node_t getType() = 0;
-	virtual shared_ptr<Node> getNextChild() = 0;
+	virtual string getType() = 0;
+	virtual boost::shared_ptr<Node> getNextChild() = 0;
 	virtual float getValue() = 0;
-	virtual shared_ptr<Node> getChild(string childName) = 0;
-	virtual void addChild(shared_ptr<Node> child) = 0;
-	virtual void addChild(float prob, shared_ptr<Node> child) = 0;
+	virtual boost::shared_ptr<Node> getChild(string childName) = 0;
+	virtual void addChild(boost::shared_ptr<Node> child) = 0;
+	virtual void addChild(float prob, boost::shared_ptr<Node> child) = 0;
 
 protected:
 	const string name;

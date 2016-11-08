@@ -13,6 +13,9 @@ using namespace std;
 
 static string YES = "Yes";
 static string NO = "No";
+//static string LEAF = "leaf";
+//static string DECISION = "decision";
+//static string CHANCE = "chance";
 
 //given a space delimited string, return a vector of the parts
 vector<string> tokenize(string input) {
@@ -46,11 +49,11 @@ int main(int argc, char* argv[]) {
 		failure_value = atof(parts[2].c_str());
 		sucess_probability = atof(parts[3].c_str());
 		failure_probability = 1 - sucess_probability;
-		int reviewerCount = 1;
+		size_t reviewerCount = 1;
 		while (getline(inputFile, line))
 		{
 			vector<string> subparts = tokenize(line);
-			string reviewerName = "Consult Reviewer " + to_string(reviewerCount);
+			string reviewerName = "Consult Reviewer " + to_string((long long unsigned int)reviewerCount);
 			reviewers.push_back(Reviewer(reviewerName, atof(subparts[0].c_str()), atof(subparts[1].c_str()), atof(subparts[2].c_str())));
 			reviewerCount++;
 		}
@@ -62,18 +65,18 @@ int main(int argc, char* argv[]) {
 	}
 
 	DecisionTree tree(success_value, failure_value, sucess_probability, failure_probability, reviewers);
-	shared_ptr<Node> currNode = tree.getRoot();
+	boost::shared_ptr<Node> currNode = tree.getRoot();
 	stringstream stream;
 	stream << fixed << setprecision(2) << currNode->getValue();
 	string s = stream.str();
 	cout << "Expected Value:" << s << endl;
 
 	do {
-		if (currNode != nullptr) {
-			if (currNode->getType() == decision) {
+		if (currNode != boost::shared_ptr<Node>()) {
+			if (currNode->getType() == DECISION) {
 				currNode = currNode->getNextChild();
 			}
-			else if (currNode->getType() == chance) {
+			else if (currNode->getType() == CHANCE) {
 				cout << currNode->getName() << endl;
 				if (currNode->getName() == "Publish" ){
 					currNode = currNode->getNextChild();
@@ -92,8 +95,8 @@ int main(int argc, char* argv[]) {
 				}
 			}
 		}
-	} while (currNode != nullptr && currNode->getType() != leaf);
+	} while (currNode != boost::shared_ptr<Node>() && currNode->getType() != LEAF);
 	if (currNode->getName() == "Reject") {
-		cout << currNode->getName();
+		cout << currNode->getName() << endl;
 	}
 }
